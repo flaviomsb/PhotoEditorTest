@@ -6,7 +6,7 @@ import { Defect } from './Defect';
 
 export const realmConfig: Realm.Configuration = {
   schema: [User, Inspection, Defect],
-  schemaVersion: 2,
+  schemaVersion: 1,
   deleteRealmIfMigrationNeeded: true,
 };
 
