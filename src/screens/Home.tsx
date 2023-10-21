@@ -1,45 +1,76 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
-import populateDb from '../services/db/populateDb';
+import React, { useCallback, useState } from 'react';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { FlatList, View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { Button, Divider, List } from 'react-native-paper';
+import EmptyListMessage from '../components/EmptyListMessage';
+import ScreenContainer from '../components/ScreenContainer';
 import { useQuery } from '../models';
-import { User } from '../models/User';
+import { Inspection } from '../models/Inspection';
+import populateDb from '../services/db/populateDb';
+import { RootParamList } from '../Routes';
 
-export default function Home() {
+const keyExtractor = (item: Inspection) => item.id.toString();
+const rightIcon = (props: { color?: string; style?: StyleProp<ViewStyle> }) => (
+  <List.Icon {...props} icon="car-info" />
+);
+
+interface Props extends NativeStackScreenProps<RootParamList, 'Home'> {}
+
+export default function Home({ navigation }: Props): React.JSX.Element {
   const [loading, setLoading] = useState(false);
-  const users = useQuery(User);
+  const inspections = useQuery(Inspection);
 
-  if (!users.length) {
-    return (
-      <View style={styles.populateDbView}>
-        <Button
-          mode="contained"
-          loading={loading}
-          onPress={() => {
-            setLoading(true);
-            populateDb().finally(() => {
-              setLoading(false);
-            });
-          }}>
-          Populate DB
-        </Button>
-      </View>
-    );
-  }
+  const renderItem = useCallback(
+    ({ item }: { item: Inspection }) => (
+      <List.Item
+        title={item.title}
+        description={`Inspector: ${item.user.name}`}
+        right={rightIcon}
+        onPress={() => {
+          navigation.navigate('Inspect', {
+            id: item.id.toString(),
+            title: item.title,
+          });
+        }}
+      />
+    ),
+    [navigation],
+  );
 
   return (
-    <View>
-      <Text>Home</Text>
-    </View>
+    <ScreenContainer>
+      {!inspections.length && (
+        <View style={styles.populateDb}>
+          <Button
+            mode="contained"
+            loading={loading}
+            onPress={() => {
+              setLoading(true);
+              populateDb().finally(() => {
+                setLoading(false);
+              });
+            }}>
+            Populate DB
+          </Button>
+        </View>
+      )}
+      <FlatList
+        data={inspections}
+        removeClippedSubviews
+        initialNumToRender={20}
+        ItemSeparatorComponent={Divider}
+        ListEmptyComponent={
+          <EmptyListMessage message="No inspections available" />
+        }
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+      />
+    </ScreenContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  populateDbView: {
-    display: 'flex',
-    flex: 1,
-    justifyContent: 'center',
-    alignContent: 'center',
-    marginHorizontal: 20,
+  populateDb: {
+    marginVertical: 20,
   },
 });
