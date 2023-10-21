@@ -11,6 +11,7 @@ export default function ScreenContainer({
 
 const styles = StyleSheet.create({
   root: {
+    backgroundColor: '#ffffff',
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
