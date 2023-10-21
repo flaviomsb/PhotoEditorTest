@@ -43,6 +43,8 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-PhotoEditorTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoEditorTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PhotoEditorTest/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-PhotoEditorTest-PhotoEditorTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoEditorTest-PhotoEditorTestTests.release.xcconfig"; path = "Target Support Files/Pods-PhotoEditorTest-PhotoEditorTestTests/Pods-PhotoEditorTest-PhotoEditorTestTests.release.xcconfig"; sourceTree = "<group>"; };
+		E7BCC1F72AE4526B00AEFB97 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
+		E7BCC1F82AE4526B00AEFB97 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -116,6 +118,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				E7BCC1F62AE4526B00AEFB97 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* PhotoEditorTest */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PhotoEditorTestTests */,
@@ -146,6 +149,16 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-PhotoEditorTest-PhotoEditorTestTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E7BCC1F62AE4526B00AEFB97 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E7BCC1F72AE4526B00AEFB97 /* MaterialCommunityIcons.ttf */,
+				E7BCC1F82AE4526B00AEFB97 /* MaterialIcons.ttf */,
+			);
+			name = Fonts;
+			path = PhotoEditorTest/Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
