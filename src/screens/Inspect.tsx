@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Button, Divider, IconButton } from 'react-native-paper';
+import { Button, IconButton } from 'react-native-paper';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FlatList, StyleSheet, View } from 'react-native';
 import ScreenContainer from '../components/ScreenContainer';
@@ -48,7 +48,6 @@ export default function Inspect({ route, navigation }: Props) {
         data={defects}
         removeClippedSubviews
         initialNumToRender={20}
-        ItemSeparatorComponent={Divider}
         ListEmptyComponent={<EmptyListMessage message="No defects found" />}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
