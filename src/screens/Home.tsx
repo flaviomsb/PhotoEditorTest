@@ -68,14 +68,16 @@ export default function Home({ navigation }: Props): React.JSX.Element {
       )}
       <FlatList
         data={inspections}
-        removeClippedSubviews
         initialNumToRender={20}
         ItemSeparatorComponent={Divider}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
         ListEmptyComponent={
           <EmptyListMessage message="No inspections available" />
         }
         keyExtractor={keyExtractor}
         renderItem={renderItem}
+        removeClippedSubviews
       />
     </ScreenContainer>
   );

@@ -46,11 +46,13 @@ export default function Inspect({ route, navigation }: Props) {
       </View>
       <FlatList
         data={defects}
-        removeClippedSubviews
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
         initialNumToRender={20}
         ListEmptyComponent={<EmptyListMessage message="No defects found" />}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
+        removeClippedSubviews
       />
     </ScreenContainer>
   );
