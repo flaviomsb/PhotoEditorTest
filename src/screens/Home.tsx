@@ -1,6 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FlatList, View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import {
+  FlatList,
+  View,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TouchableOpacity,
+} from 'react-native';
 import { Button, Divider, List } from 'react-native-paper';
 import EmptyListMessage from '../components/EmptyListMessage';
 import ScreenContainer from '../components/ScreenContainer';
@@ -8,9 +15,10 @@ import { useQuery } from '../models';
 import { Inspection } from '../models/Inspection';
 import populateDb from '../services/db/populateDb';
 import { RootParamList } from '../Routes';
+import DefectCount from '../components/DefectCount';
 
 const keyExtractor = (item: Inspection) => item.id.toString();
-const rightIcon = (props: { color?: string; style?: StyleProp<ViewStyle> }) => (
+const leftIcon = (props: { color?: string; style?: StyleProp<ViewStyle> }) => (
   <List.Icon {...props} icon="car-info" />
 );
 
@@ -22,17 +30,21 @@ export default function Home({ navigation }: Props): React.JSX.Element {
 
   const renderItem = useCallback(
     ({ item }: { item: Inspection }) => (
-      <List.Item
-        title={item.title}
-        description={`Inspector: ${item.user.name}`}
-        right={rightIcon}
+      <TouchableOpacity
+        style={styles.renderItem}
         onPress={() => {
           navigation.navigate('Inspect', {
             id: item.id.toString(),
             title: item.title,
           });
-        }}
-      />
+        }}>
+        <List.Item
+          title={item.title}
+          description={`Inspector: ${item.user.name}`}
+          left={leftIcon}
+        />
+        <DefectCount count={item.defects?.length ?? 0} />
+      </TouchableOpacity>
     ),
     [navigation],
   );
@@ -72,5 +84,10 @@ export default function Home({ navigation }: Props): React.JSX.Element {
 const styles = StyleSheet.create({
   populateDb: {
     marginVertical: 20,
+  },
+  renderItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
