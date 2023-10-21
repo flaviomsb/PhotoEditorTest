@@ -2,26 +2,75 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PaperProvider } from 'react-native-paper';
+import RealmPlugin from 'realm-flipper-plugin-device';
+import { theme } from './assets/theme';
+import { useRealm } from './models';
 import Home from './screens/Home';
-import TakeTest from './screens/TakeTest';
+import Inspect from './screens/Inspect';
+import AddDefect from './screens/AddDefect';
 
 export type RootParamList = {
   Home: undefined;
-  TakeTest: undefined;
+  Inspect: {
+    id: string;
+    title: string;
+  };
+  AddDefect: {
+    id: string;
+  };
 };
 
-const Stack = createNativeStackNavigator<RootParamList>();
+interface ScreenOptions {}
 
-export function Routes() {
+const Stack = createNativeStackNavigator<RootParamList>();
+const headerOptions: Partial<ScreenOptions> = {
+  headerStyle: {
+    backgroundColor: theme.colors.primary,
+  },
+  headerTintColor: '#ffffff',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
+};
+
+export function Routes(): React.JSX.Element {
+  const realm = useRealm();
+
   return (
     <NavigationContainer>
-      <PaperProvider>
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="TakeTest" component={TakeTest} />
-        </Stack.Navigator>
+      <PaperProvider theme={theme}>
+        <>
+          <RealmPlugin realms={[realm]} />
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{
+                title: 'Inspections',
+                ...headerOptions,
+              }}
+            />
+            <Stack.Screen
+              name="Inspect"
+              component={Inspect}
+              options={({ route }) => ({
+                title: route.params.title,
+                ...headerOptions,
+                headerBackVisible: false,
+              })}
+            />
+            <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
+              <Stack.Screen
+                name="AddDefect"
+                component={AddDefect}
+                options={{
+                  title: 'Add Defect',
+                  ...headerOptions,
+                }}
+              />
+            </Stack.Group>
+          </Stack.Navigator>
+        </>
       </PaperProvider>
     </NavigationContainer>
   );
