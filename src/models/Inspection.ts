@@ -14,7 +14,10 @@ export class Inspection extends Realm.Object<Inspection> {
     primaryKey: 'id',
     properties: {
       id: 'uuid',
-      title: 'string',
+      title: {
+        type: 'string',
+        indexed: 'full-text',
+      },
       user: 'User',
       defects: 'Defect[]',
       signaturePath: 'string?',
