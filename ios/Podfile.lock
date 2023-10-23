@@ -498,6 +498,8 @@ PODS:
     - React-perflogger (= 0.72.6)
   - RealmJS (12.2.1):
     - React
+  - RNFS (2.20.0):
+    - React-Core
   - RNPhotoEditorSDK (3.0.0):
     - PhotoEditorSDK (~> 11.4)
     - React
@@ -580,6 +582,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RealmJS (from `../node_modules/realm`)
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNPhotoEditorSDK (from `../node_modules/react-native-photoeditorsdk`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -692,6 +695,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RealmJS:
     :path: "../node_modules/realm"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNPhotoEditorSDK:
     :path: "../node_modules/react-native-photoeditorsdk"
   RNScreens:
@@ -759,6 +764,7 @@ SPEC CHECKSUMS:
   React-utils: fa59c9a3375fb6f4aeb66714fd3f7f76b43a9f16
   ReactCommon: dd03c17275c200496f346af93a7b94c53f3093a4
   RealmJS: b36dae5c0def204602827884512252a320332c69
+  RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNPhotoEditorSDK: 44ef77c0b8fdd1639d9d13dc65114426f27016da
   RNScreens: 2a28f2973f4d0d4623e18629ebfc2c4adaceb39a
   RNVectorIcons: 8b5bb0fa61d54cd2020af4f24a51841ce365c7e9
