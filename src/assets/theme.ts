@@ -8,5 +8,8 @@ export const theme = {
     primary: '#274658',
     secondary: '#ad5586',
     tertiary: '#008ca1',
+    elevation: {
+      level3: '#f2f2f2',
+    },
   },
 };
