@@ -1,71 +1,53 @@
 import React, { useCallback, useState } from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import {
-  FlatList,
-  View,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  TouchableOpacity,
-} from 'react-native';
-import { Button, Divider, List } from 'react-native-paper';
+import { FlatList, View, StyleSheet } from 'react-native';
+import { Divider, Searchbar } from 'react-native-paper';
+import InspectionRowItem from '../components/InspectionRowItem';
 import EmptyListMessage from '../components/EmptyListMessage';
 import ScreenContainer from '../components/ScreenContainer';
-import { useQuery } from '../models';
+import useInspections from '../hooks/useInspections';
 import { Inspection } from '../models/Inspection';
-import populateDb from '../services/db/populateDb';
 import { RootParamList } from '../Routes';
-import DefectCount from '../components/DefectCount';
+import PopulateDbButton from '../components/PopulateDbButton';
 
 const keyExtractor = (item: Inspection) => item.id.toString();
-const leftIcon = (props: { color?: string; style?: StyleProp<ViewStyle> }) => (
-  <List.Icon {...props} icon="car-info" />
-);
 
 interface Props extends NativeStackScreenProps<RootParamList, 'Home'> {}
 
 export default function Home({ navigation }: Props): React.JSX.Element {
-  const [loading, setLoading] = useState(false);
-  const inspections = useQuery(Inspection);
+  const [searchCriteria, setSearchCriteria] = useState('');
+  const inspections = useInspections({ searchCriteria });
 
   const renderItem = useCallback(
     ({ item }: { item: Inspection }) => (
-      <TouchableOpacity
-        style={styles.renderItem}
+      <InspectionRowItem
+        inspection={item}
         onPress={() => {
           navigation.navigate('Inspect', {
             id: item.id.toString(),
             title: item.title,
           });
-        }}>
-        <List.Item
-          title={item.title}
-          description={`Inspector: ${item.user.name}`}
-          left={leftIcon}
-        />
-        <DefectCount count={item.defects?.length ?? 0} />
-      </TouchableOpacity>
+        }}
+      />
     ),
     [navigation],
   );
 
   return (
     <ScreenContainer>
-      {!inspections.length && (
-        <View style={styles.populateDb}>
-          <Button
-            mode="contained"
-            loading={loading}
-            onPress={() => {
-              setLoading(true);
-              populateDb().finally(() => {
-                setLoading(false);
-              });
-            }}>
-            Populate DB
-          </Button>
-        </View>
-      )}
+      <View style={styles.topBar}>
+        {!inspections.length && !searchCriteria ? (
+          <PopulateDbButton />
+        ) : (
+          <Searchbar
+            value={searchCriteria}
+            onChangeText={text => {
+              setSearchCriteria(text);
+            }}
+            placeholder="Search"
+          />
+        )}
+      </View>
       <FlatList
         data={inspections}
         initialNumToRender={20}
@@ -84,12 +66,7 @@ export default function Home({ navigation }: Props): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  populateDb: {
-    marginVertical: 20,
-  },
-  renderItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  topBar: {
+    marginVertical: 10,
   },
 });
