@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import type Realm from 'realm';
 import { StyleSheet, View } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
@@ -8,15 +8,15 @@ import openPhotoEditor from '../services/photo/openPhotoEditor';
 
 export default function EditDefect({ defect }: { defect: Defect }) {
   const realm = useRealm();
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = React.useState('');
 
-  const updateDefect = useCallback(() => {
+  const updateDefect = React.useCallback(() => {
     realm.write(() => {
       defect.description = description;
     });
   }, [defect, description, realm]);
 
-  const deleteDefect = useCallback(() => {
+  const deleteDefect = React.useCallback(() => {
     realm.write(() => {
       defect.inspection.defects = defect.inspection.defects?.filter(
         def => def.id.toString() !== defect.id.toString(),
@@ -26,7 +26,7 @@ export default function EditDefect({ defect }: { defect: Defect }) {
     });
   }, [defect, realm]);
 
-  const savePhoto = useCallback(async () => {
+  const savePhoto = React.useCallback(async () => {
     const photoPath = await openPhotoEditor(defect.photoPath);
 
     if (photoPath) {
@@ -36,7 +36,7 @@ export default function EditDefect({ defect }: { defect: Defect }) {
     }
   }, [defect, realm]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setDescription(defect.description);
   }, [defect.description]);
 

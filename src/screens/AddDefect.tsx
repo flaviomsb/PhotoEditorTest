@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Realm from 'realm';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootParamList } from '../Routes';
@@ -15,7 +15,7 @@ interface AddDefectProps
 export default function AddDefect({ navigation, route }: AddDefectProps) {
   const realm = useRealm();
   const inspection = useInspection(route.params.id);
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = React.useState('');
 
   const goBack = () => {
     navigation.goBack();
