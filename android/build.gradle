@@ -1,4 +1,17 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+// Add the PESDK repository and plugin dependency
+buildscript {
+    repositories {
+        jcenter()
+        google()
+        maven { url "https://artifactory.img.ly/artifactory/imgly" }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10"
+        classpath "ly.img.android.pesdk:plugin:10.7.3"
+    }
+}
+
 
 buildscript {
     ext {
@@ -17,5 +30,11 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://artifactory.img.ly/artifactory/imgly' }
     }
 }
