@@ -27,7 +27,10 @@ export default function EditDefect({ defect }: { defect: Defect }) {
   }, [defect, realm]);
 
   const savePhoto = React.useCallback(async () => {
-    const photoPath = await openPhotoEditor(defect.photoPath);
+    const photoPath = await openPhotoEditor({
+      defectId: defect.id.toString(),
+      photoUri: defect.photoPath,
+    });
 
     if (photoPath) {
       realm.write(() => {

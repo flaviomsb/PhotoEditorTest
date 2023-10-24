@@ -1,9 +1,19 @@
-import { PESDK } from 'react-native-photoeditorsdk';
+import {
+  ImageExportType,
+  ImageFormat,
+  PESDK,
+} from 'react-native-photoeditorsdk';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { v4 as uuid } from 'uuid';
+import RNFS from 'react-native-fs';
 
-export default async function openPhotoEditor(
-  photoUri?: string,
-): Promise<string | undefined> {
+export default async function openPhotoEditor({
+  defectId,
+  photoUri,
+}: {
+  defectId: string;
+  photoUri?: string;
+}): Promise<string | undefined> {
   try {
     async function openImageLibrary() {
       // Select a photo from the camera roll.
@@ -29,7 +39,15 @@ export default async function openPhotoEditor(
     }
 
     // Open the photo editor and handle the export as well as any occuring errors.
-    const result = await PESDK.openEditor(uri);
+    const result = await PESDK.openEditor(uri, {
+      export: {
+        filename: [RNFS.DocumentDirectoryPath, defectId, uuid()].join('/'),
+        image: {
+          format: ImageFormat.PNG,
+          exportType: ImageExportType.FILE_URL,
+        },
+      },
+    });
 
     if (!result) {
       return;
