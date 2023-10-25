@@ -7,10 +7,14 @@ export default function useInspections({
 }: {
   searchCriteria?: string;
 }): Realm.Results<Inspection> {
-  let inspections = useQuery(Inspection);
+  const inspections = useQuery(Inspection);
 
   if (searchCriteria) {
-    inspections = inspections.filtered('title TEXT $0', searchCriteria);
+    const filtered = inspections.filtered('title TEXT $0', searchCriteria);
+
+    if (filtered.length > 0) {
+      return filtered;
+    }
   }
 
   return inspections;
