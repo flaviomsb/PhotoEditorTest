@@ -31,7 +31,9 @@ export default async function openPhotoEditor({
         : null;
     }
 
-    const uri = photoUri ? photoUri : await openImageLibrary();
+    const photoExists = photoUri ? await RNFS.exists(photoUri) : false;
+
+    const uri = photoExists ? photoUri : await openImageLibrary();
 
     if (!uri) {
       console.log('no photo available');
@@ -41,7 +43,9 @@ export default async function openPhotoEditor({
     // Open the photo editor and handle the export as well as any occuring errors.
     const result = await PESDK.openEditor(uri, {
       export: {
-        filename: [RNFS.DocumentDirectoryPath, defectId, uuid()].join('/'),
+        filename: photoExists
+          ? photoUri
+          : [RNFS.DocumentDirectoryPath, defectId, uuid()].join('/'),
         image: {
           format: ImageFormat.PNG,
           exportType: ImageExportType.FILE_URL,
