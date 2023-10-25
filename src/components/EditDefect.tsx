@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { Defect } from '../models/Defect';
 import { useRealm } from '../models';
-import openPhotoEditor from '../services/photo/openPhotoEditor';
+import DefectPhotos from './DefectPhotos';
 
 export default function EditDefect({ defect }: { defect: Defect }) {
   const realm = useRealm();
@@ -24,19 +24,6 @@ export default function EditDefect({ defect }: { defect: Defect }) {
 
       realm.delete(defect);
     });
-  }, [defect, realm]);
-
-  const savePhoto = React.useCallback(async () => {
-    const photoPath = await openPhotoEditor({
-      defectId: defect.id.toString(),
-      photoUri: defect.photoPath,
-    });
-
-    if (photoPath) {
-      realm.write(() => {
-        defect.photoPath = photoPath;
-      });
-    }
   }, [defect, realm]);
 
   React.useEffect(() => {
@@ -75,9 +62,7 @@ export default function EditDefect({ defect }: { defect: Defect }) {
           uppercase>
           Save
         </Button>
-        <Button icon="camera" onPress={savePhoto} uppercase>
-          Photo
-        </Button>
+        <DefectPhotos defect={defect} />
       </View>
     </View>
   );
@@ -94,6 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   actions: {
+    paddingTop: 8,
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
