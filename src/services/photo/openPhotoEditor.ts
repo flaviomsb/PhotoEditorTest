@@ -40,12 +40,12 @@ export default async function openPhotoEditor({
       return;
     }
 
+    const photoId = [defectId, uuid()].join('/');
+
     // Open the photo editor and handle the export as well as any occuring errors.
     const result = await PESDK.openEditor(uri, {
       export: {
-        filename: photoExists
-          ? photoUri
-          : [RNFS.DocumentDirectoryPath, defectId, uuid()].join('/'),
+        filename: [RNFS.DocumentDirectoryPath, photoId].join('/'),
         image: {
           format: ImageFormat.PNG,
           exportType: ImageExportType.FILE_URL,
@@ -53,13 +53,17 @@ export default async function openPhotoEditor({
       },
     });
 
-    if (!result) {
-      return;
+    if (result) {
+      if (photoExists && photoUri) {
+        try {
+          await RNFS.unlink(photoUri);
+        } catch (error) {
+          console.log(`failed to delete ${photoUri}`);
+        }
+      }
+      return [photoId, 'png'].join('.');
     }
-
-    return result.image;
   } catch (error) {
     console.log(error);
-    return;
   }
 }
