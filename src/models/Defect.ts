@@ -5,7 +5,7 @@ export class Defect extends Realm.Object<Defect> {
   id!: Realm.BSON.UUID;
   description!: string;
   inspection!: Inspection;
-  photoPath?: string;
+  photos?: Realm.List<string>;
 
   static schema: Realm.ObjectSchema = {
     name: 'Defect',
@@ -18,7 +18,7 @@ export class Defect extends Realm.Object<Defect> {
         objectType: 'Inspection',
         property: 'defects',
       },
-      photoPath: 'string?',
+      photos: 'string[]',
     },
   };
 }
