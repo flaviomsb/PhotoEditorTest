@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Badge, Button, Divider, Menu } from 'react-native-paper';
+import RNFS from 'react-native-fs';
 import { useRealm } from '../models';
 import { Defect } from '../models/Defect';
 import openPhotoEditor from '../services/photo/openPhotoEditor';
@@ -30,14 +31,25 @@ export default function DefectPhotos({ defect }: { defect: Defect }) {
   }, [defect, realm]);
 
   const editPhoto = React.useCallback(
-    async (photoUri: string) => {
+    async (photoPath: string, index: number) => {
       setShowMenu(false);
-      await openPhotoEditor({
+      const newPhotoPath = await openPhotoEditor({
         defectId: defect.id.toString(),
-        photoUri,
+        photoUri: [RNFS.DocumentDirectoryPath, photoPath].join('/'),
       });
+
+      const currentPhotos = defect.photos;
+
+      if (newPhotoPath) {
+        realm.write(() => {
+          if (currentPhotos) {
+            currentPhotos[index] = newPhotoPath;
+            defect.photos = currentPhotos;
+          }
+        });
+      }
     },
-    [defect],
+    [defect, realm],
   );
 
   return photosCount ? (
@@ -60,7 +72,7 @@ export default function DefectPhotos({ defect }: { defect: Defect }) {
           key={path}
           leadingIcon="image"
           onPress={async () => {
-            await editPhoto(path);
+            await editPhoto(path, index);
           }}
           title={`Photo #${index + 1}`}
         />
