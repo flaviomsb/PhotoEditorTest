@@ -32,8 +32,12 @@ export default function DefectPhotos({ defect }: { defect: Defect }) {
     hideDeleteAllConfirm();
   };
 
-  const openGallery = () => {
-    setShowGallery(true);
+  const openGallery = async () => {
+    if (photosCount) {
+      setShowGallery(true);
+    } else {
+      await addPhoto();
+    }
   };
 
   const hideGallery = () => {
