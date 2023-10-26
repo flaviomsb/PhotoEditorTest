@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Button, Divider, IconButton } from 'react-native-paper';
+import { Button, Divider } from 'react-native-paper';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FlatList, StyleSheet, View } from 'react-native';
 import ScreenContainer from '../components/ScreenContainer';
@@ -9,6 +9,7 @@ import type { RootParamList } from '../Routes';
 import { useQuery } from '../models';
 import { Defect } from '../models/Defect';
 import EditDefect from '../components/EditDefect';
+import GoBackButton from '../components/GoBackButton';
 
 interface Props extends NativeStackScreenProps<RootParamList, 'Inspect'> {}
 
@@ -25,9 +26,7 @@ export default function Inspect({ route, navigation }: Props) {
   return (
     <ScreenContainer>
       <View style={styles.actions}>
-        <IconButton
-          mode="outlined"
-          icon="arrow-left"
+        <GoBackButton
           onPress={() => {
             navigation.goBack();
           }}
@@ -43,6 +42,19 @@ export default function Inspect({ route, navigation }: Props) {
           uppercase>
           Add Defect
         </Button>
+        {defects.length > 0 && (
+          <Button
+            mode="outlined"
+            icon="signature"
+            onPress={() => {
+              navigation.push('InspectionSignature', {
+                id: route.params.id,
+              });
+            }}
+            uppercase>
+            Signature
+          </Button>
+        )}
       </View>
       <FlatList
         data={defects}
