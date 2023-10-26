@@ -7,6 +7,7 @@ import { theme } from './assets/theme';
 import { useRealm } from './models';
 import Home from './screens/Home';
 import Inspect from './screens/Inspect';
+import InspectionSignature from './screens/InspectionSignature';
 import AddDefect from './screens/AddDefect';
 
 export type RootParamList = {
@@ -14,6 +15,9 @@ export type RootParamList = {
   Inspect: {
     id: string;
     title: string;
+  };
+  InspectionSignature: {
+    id: string;
   };
   AddDefect: {
     id: string;
@@ -65,6 +69,14 @@ export function Routes(): React.JSX.Element {
                 component={AddDefect}
                 options={{
                   title: 'Add Defect',
+                  ...headerOptions,
+                }}
+              />
+              <Stack.Screen
+                name="InspectionSignature"
+                component={InspectionSignature}
+                options={{
+                  title: 'Inspector Signature',
                   ...headerOptions,
                 }}
               />
