@@ -45,7 +45,7 @@ export default function Inspect({ route, navigation }: Props) {
         {defects.length > 0 && (
           <Button
             mode="outlined"
-            icon="signature"
+            icon="file-sign"
             onPress={() => {
               navigation.push('InspectionSignature', {
                 id: route.params.id,
