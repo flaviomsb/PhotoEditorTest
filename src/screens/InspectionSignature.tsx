@@ -59,6 +59,7 @@ export default function InspectionSignature({ navigation, route }: Props) {
       inspection.signaturePath = signature;
     });
 
+    goBack();
     // This is how base64 is saved to a png
     //   ReactNativeBlobUtil.fs
     //     .writeFile(
@@ -90,7 +91,17 @@ export default function InspectionSignature({ navigation, route }: Props) {
             onEmpty={validate}
             dataURL={inspection.signaturePath}
             webStyle={webStyle}
+            // penColor="pink"
           />
+          {/* <View style={styles.preview}>
+            {inspection.signaturePath ? (
+              <Image
+                resizeMode={'contain'}
+                style={{ width: 335, height: 114 }}
+                source={{ uri: inspection.signaturePath }}
+              />
+            ) : null}
+          </View> */}
         </View>
         <View style={styles.actions}>
           <Button
@@ -104,10 +115,13 @@ export default function InspectionSignature({ navigation, route }: Props) {
             Confirm
           </Button>
         </View>
-        <Snackbar visible={showMessage} onDismiss={onDismissMessage}>
-          <View style={styles.messageContainer}>
+        <Snackbar
+          visible={showMessage}
+          onDismiss={onDismissMessage}
+          style={styles.snackbar}>
+          <View style={styles.snackbarContent}>
             <Icon source="alert-outline" size={24} color="white" />
-            <Text variant="titleMedium" style={styles.message}>
+            <Text variant="titleMedium" style={styles.snackbarText}>
               {message}
             </Text>
           </View>
@@ -137,11 +151,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 10,
   },
-  messageContainer: {
+  snackbar: {
+    backgroundColor: '#e91e63',
+  },
+  snackbarContent: {
     flexDirection: 'row',
     gap: 10,
   },
-  message: {
+  snackbarText: {
     color: '#ffffff',
+    fontWeight: 'bold',
+  },
+  preview: {
+    width: '100%',
+    height: 290,
+    backgroundColor: '#F8F8F8',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15,
+    paddingHorizontal: 15,
   },
 });
