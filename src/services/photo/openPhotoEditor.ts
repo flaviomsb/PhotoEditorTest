@@ -2,6 +2,7 @@ import {
   ImageExportType,
   ImageFormat,
   PESDK,
+  // Tool,
 } from 'react-native-photoeditorsdk';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { v4 as uuid } from 'uuid';
@@ -51,6 +52,22 @@ export default async function openPhotoEditor({
           exportType: ImageExportType.FILE_URL,
         },
       },
+
+      // tools: [
+      // Tool.ADJUSTMENT,
+      // Tool.AUDIO,
+      // Tool.BRUSH,
+      // Tool.COMPOSITION,
+      // Tool.FILTER,
+      // Tool.FOCUS,
+      // Tool.FRAME,
+      // Tool.OVERLAY,
+      // Tool.STICKER,
+      // Tool.TEXT,
+      // Tool.TEXT_DESIGN,
+      // Tool.TRANSFORM,
+      // Tool.TRIM,
+      // ],
     });
 
     if (result) {
