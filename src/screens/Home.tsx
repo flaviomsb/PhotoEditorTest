@@ -22,6 +22,7 @@ export default function Home({ navigation }: Props): React.JSX.Element {
     ({ item }: { item: Inspection }) => (
       <InspectionRowItem
         inspection={item}
+        navigation={navigation}
         onPress={() => {
           navigation.navigate('Inspect', {
             id: item.id.toString(),
