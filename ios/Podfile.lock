@@ -70,9 +70,9 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - hermes-engine (0.72.6):
-    - hermes-engine/Pre-built (= 0.72.6)
-  - hermes-engine/Pre-built (0.72.6)
+  - hermes-engine (0.72.7):
+    - hermes-engine/Pre-built (= 0.72.7)
+  - hermes-engine/Pre-built (0.72.7)
   - imglyKit (11.6.0)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
@@ -735,7 +735,7 @@ SPEC CHECKSUMS:
   FlipperKit: 2efad7007d6745a3f95e4034d547be637f89d3f6
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
-  hermes-engine: 8057e75cfc1437b178ac86c8654b24e7fead7f60
+  hermes-engine: 9180d43df05c1ed658a87cc733dc3044cf90c00a
   imglyKit: d118134604d8ad56889b1c3afd6707babce8fefc
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
@@ -789,4 +789,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 5905254d7c73ba0d4db262e7e67e67a9141c53eb
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.14.3
